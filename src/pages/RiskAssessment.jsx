@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { Shield, ArrowRight, ArrowLeft, CheckCircle, Brain, Target, TrendingUp } from 'lucide-react';
 import { useInvestmentContext } from '../context/InvestmentContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+=======
+import { Shield, ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react';
+import { useInvestmentContext } from '../context/InvestmentContext';
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
 
 const RiskAssessment = () => {
   const navigate = useNavigate();
@@ -201,6 +206,7 @@ const RiskAssessment = () => {
     setAnswers(new Array(questions.length).fill(null));
   }, []);
   
+<<<<<<< HEAD
   const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
   
   if (isCompleted) {
@@ -326,6 +332,110 @@ const RiskAssessment = () => {
           </div>
         </div>
       </div>
+=======
+  return (
+    <div className="pt-24 pb-12 max-w-4xl mx-auto">
+      <div className="mb-8 text-center">
+        <Shield className="w-16 h-16 text-indigo-600 mx-auto mb-4" />
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">Risk Tolerance Assessment</h1>
+        <p className="text-lg text-gray-600">
+          Answer these questions to help us understand your investment style and risk tolerance
+        </p>
+      </div>
+      
+      {!isCompleted ? (
+        <motion.div 
+          className="glass-card p-8"
+          key={currentQuestion}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="flex justify-between items-center mb-6">
+            <span className="text-sm font-medium text-gray-500">
+              Question {currentQuestion + 1} of {questions.length}
+            </span>
+            <div className="bg-indigo-100 rounded-full h-2 w-full max-w-xs ml-4">
+              <div 
+                className="bg-indigo-600 h-2 rounded-full transition-all duration-300 ease-out"
+                style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+          
+          <h2 className="text-xl md:text-2xl font-semibold mb-6">
+            {questions[currentQuestion].question}
+          </h2>
+          
+          <div className="space-y-3">
+            {questions[currentQuestion].options.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => handleAnswer(option.value)}
+                className="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-indigo-500 hover:bg-indigo-50 transition-all group"
+              >
+                <div className="flex items-center">
+                  <div className="w-6 h-6 flex-shrink-0 rounded-full border-2 border-gray-300 group-hover:border-indigo-500 mr-3"></div>
+                  <span className="text-gray-800 group-hover:text-indigo-700 font-medium">
+                    {option.text}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+          
+          <div className="mt-8 flex justify-between">
+            {currentQuestion > 0 ? (
+              <button
+                onClick={goToPreviousQuestion}
+                className="flex items-center text-gray-600 hover:text-indigo-600 transition-colors"
+              >
+                <ArrowLeft size={16} className="mr-1" />
+                Previous Question
+              </button>
+            ) : (
+              <div></div>
+            )}
+            
+            <div className="text-sm text-gray-500">
+              {answers[currentQuestion] !== null ? (
+                <span className="text-green-600 flex items-center">
+                  <CheckCircle size={16} className="mr-1" />
+                  Answer selected
+                </span>
+              ) : (
+                "Select an option to continue"
+              )}
+            </div>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div 
+          className="glass-card p-8 text-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-8 h-8 text-green-600" />
+          </div>
+          
+          <h2 className="text-2xl font-bold mb-2">Assessment Complete!</h2>
+          <p className="text-gray-600 mb-6">
+            Thank you for completing the risk assessment. We've analyzed your responses and prepared your personalized investment plan.
+          </p>
+          
+          <button
+            onClick={navigateToInvestmentPlan}
+            className="btn btn-primary"
+          >
+            View Your Investment Plan
+            <ArrowRight className="ml-2" size={18} />
+          </button>
+        </motion.div>
+      )}
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+<<<<<<< HEAD
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyCjf4ADeYgaFXhATleNH5BxuWHdb_owp-Y";
 
 // Initialize the Gemini API
@@ -11,6 +12,12 @@ const chatHistory = [];
 
 // Maximum number of messages to keep in history
 const MAX_HISTORY_LENGTH = 10;
+=======
+const API_KEY = "AIzaSyCjf4ADeYgaFXhATleNH5BxuWHdb_owp-Y"; // Replace with your actual API Key
+
+// Initialize the Gemini API
+const genAI = new GoogleGenerativeAI(API_KEY);
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
 
 // Function to fetch investment suggestions
 export const getGeminiInvestmentSuggestions = async (promptData) => {
@@ -67,6 +74,7 @@ export const getGeminiInvestmentSuggestions = async (promptData) => {
 
   } catch (error) {
     console.error("Error generating investment suggestions:", error);
+<<<<<<< HEAD
     
     // Check if it's a quota error
     if (error.message && error.message.includes('quota')) {
@@ -308,3 +316,49 @@ const generateSuggestions = (text) => {
   ];
 };
 
+=======
+
+    // Return dummy data in case of API failure
+    return [
+      {
+        category: "Equity Mutual Funds",
+        options: [
+          "SBI Blue Chip Fund - Large-cap fund with consistent performance",
+          "Axis Midcap Fund - Growth-oriented midcap exposure",
+          "Parag Parikh Flexi Cap Fund - Diversified across market caps"
+        ]
+      },
+      {
+        category: "Debt Instruments",
+        options: [
+          "SBI Magnum Gilt Fund - Government securities for stability",
+          "HDFC Corporate Bond Fund - Fixed income with moderate risk",
+          "Kotak Bond Fund - Diversified debt portfolio"
+        ]
+      },
+      {
+        category: "Gold Investments",
+        options: [
+          "Nippon India Gold ETF - Tracks gold prices efficiently",
+          "SBI Gold Fund - Fund of fund investing in gold ETFs"
+        ]
+      },
+      {
+        category: "Cryptocurrency",
+        options: [
+          "Bitcoin (BTC) - Market leader with highest market cap",
+          "Ethereum (ETH) - Smart contract platform with utility",
+          "Consider investing through CoinDCX or WazirX platforms"
+        ]
+      },
+      {
+        category: "Cash & Liquid Funds",
+        options: [
+          "ICICI Prudential Liquid Fund - Short-term liquid investment",
+          "Axis Liquid Fund - High liquidity with low risk"
+        ]
+      }
+    ];
+  }
+};
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53

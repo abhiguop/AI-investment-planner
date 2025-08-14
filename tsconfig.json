@@ -1,10 +1,13 @@
 {
+<<<<<<< HEAD
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
+=======
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

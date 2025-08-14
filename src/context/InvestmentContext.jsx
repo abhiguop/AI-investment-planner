@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { saveToStorage, loadFromStorage, STORAGE_KEYS } from '../utils/storage';
+=======
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
 
 const InvestmentContext = createContext();
 
@@ -7,6 +10,7 @@ export const useInvestmentContext = () => useContext(InvestmentContext);
 
 export const InvestmentProvider = ({ children }) => {
   // Initial state for financial data
+<<<<<<< HEAD
   const [financialData, setFinancialData] = useState(() => 
     loadFromStorage(STORAGE_KEYS.FINANCIAL_DATA, {
       income: {
@@ -44,6 +48,39 @@ export const InvestmentProvider = ({ children }) => {
   const [hasCompletedRiskAssessment, setHasCompletedRiskAssessment] = useState(() => 
     loadFromStorage(STORAGE_KEYS.RISK_ASSESSMENT, false)
   );
+=======
+  const [financialData, setFinancialData] = useState({
+    income: {
+      salary: 80000,
+      business: 0,
+      other: 5000
+    },
+    expenses: {
+      housing: 25000,
+      utilities: 5000,
+      groceries: 10000,
+      transportation: 5000,
+      other: 10000
+    }
+  });
+  
+  // Investment plan state
+  const [investmentPlan, setInvestmentPlan] = useState({
+    riskScore: null,
+    riskProfile: null,
+    riskDescription: null,
+    equityAllocation: 40,
+    bondsAllocation: 30,
+    goldAllocation: 15,
+    cryptoAllocation: 5,
+    cashAllocation: 10,
+    monthlyInvestmentAmount: 0,
+    suggestedInvestments: null
+  });
+  
+  // Track if the user has completed the risk assessment
+  const [hasCompletedRiskAssessment, setHasCompletedRiskAssessment] = useState(false);
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   
   // Market data for simulations
   const [historicalData, setHistoricalData] = useState({
@@ -83,31 +120,52 @@ export const InvestmentProvider = ({ children }) => {
   
   // Update income details
   const updateIncome = (newIncome) => {
+<<<<<<< HEAD
     const updatedData = {
       ...financialData,
       income: newIncome
     };
     setFinancialData(updatedData);
     saveToStorage(STORAGE_KEYS.FINANCIAL_DATA, updatedData);
+=======
+    setFinancialData({
+      ...financialData,
+      income: newIncome
+    });
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   };
   
   // Update expense details
   const updateExpenses = (newExpenses) => {
+<<<<<<< HEAD
     const updatedData = {
       ...financialData,
       expenses: newExpenses
     };
     setFinancialData(updatedData);
     saveToStorage(STORAGE_KEYS.FINANCIAL_DATA, updatedData);
+=======
+    setFinancialData({
+      ...financialData,
+      expenses: newExpenses
+    });
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   };
   
   // Update risk profile and investment allocations
   const updateRiskProfile = (riskData) => {
+<<<<<<< HEAD
     const updatedPlan = {
       ...investmentPlan,
       ...riskData
     };
     setInvestmentPlan(updatedPlan);
+=======
+    setInvestmentPlan({
+      ...investmentPlan,
+      ...riskData
+    });
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
     setHasCompletedRiskAssessment(true);
     
     // Calculate monthly investment amount
@@ -119,6 +177,7 @@ export const InvestmentProvider = ({ children }) => {
     const disposableIncome = totalIncome - totalExpenses;
     const recommendedInvestmentAmount = Math.max(0, Math.round(disposableIncome * 0.8));
     
+<<<<<<< HEAD
     const finalPlan = {
       ...updatedPlan,
       monthlyInvestmentAmount: recommendedInvestmentAmount
@@ -127,16 +186,29 @@ export const InvestmentProvider = ({ children }) => {
     setInvestmentPlan(finalPlan);
     saveToStorage(STORAGE_KEYS.INVESTMENT_PLAN, finalPlan);
     saveToStorage(STORAGE_KEYS.RISK_ASSESSMENT, true);
+=======
+    setInvestmentPlan(prev => ({
+      ...prev,
+      monthlyInvestmentAmount: recommendedInvestmentAmount
+    }));
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   };
   
   // Update investment suggestions from Gemini API
   const updateInvestmentSuggestions = (suggestions) => {
+<<<<<<< HEAD
     const updatedPlan = {
       ...investmentPlan,
       suggestedInvestments: suggestions
     };
     setInvestmentPlan(updatedPlan);
     saveToStorage(STORAGE_KEYS.INVESTMENT_PLAN, updatedPlan);
+=======
+    setInvestmentPlan(prev => ({
+      ...prev,
+      suggestedInvestments: suggestions
+    }));
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   };
   
   const value = {

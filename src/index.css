@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -58,22 +59,50 @@
     --chart-5: 340 75% 55%;
   }
 
+=======
+:root {
+  --primary: #4a00e0;
+  --primary-light: #7c4dff;
+  --primary-dark: #3700b3;
+  --secondary: #00b8d4;
+  --secondary-light: #62ebff;
+  --secondary-dark: #0088a3;
+  --accent: #ffd700;
+  --success: #00c853;
+  --warning: #ffab00;
+  --error: #f44336;
+  --background: #f8fafc;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+}
+
+@layer base {
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   html {
     @apply scroll-smooth;
   }
   
   body {
+<<<<<<< HEAD
     @apply bg-background text-foreground font-sans leading-relaxed;
+=======
+    @apply font-sans leading-relaxed text-gray-800 bg-gray-50;
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
+<<<<<<< HEAD
   * {
     @apply border-border;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold leading-tight;
+=======
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold leading-tight text-gray-900;
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   }
   
   h1 { @apply text-4xl md:text-5xl mb-6; }
@@ -85,6 +114,7 @@
 }
 
 @layer components {
+<<<<<<< HEAD
   /* Custom animations */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-in-out;
@@ -167,5 +197,33 @@
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background-color: hsl(var(--foreground));
+=======
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply bg-indigo-600 hover:bg-indigo-700 text-white focus:ring-indigo-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-teal-500 hover:bg-teal-600 text-white focus:ring-teal-400;
+  }
+  
+  .btn-accent {
+    @apply bg-amber-400 hover:bg-amber-500 text-gray-900 focus:ring-amber-300;
+  }
+  
+  .card {
+    @apply rounded-xl bg-white/80 backdrop-blur-sm shadow-lg p-6 hover:shadow-xl transition-shadow duration-300;
+  }
+  
+  .glass-card {
+    @apply bg-white/25 backdrop-blur-md border border-white/20 rounded-xl shadow-lg;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200 bg-white/80;
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   }
 }

@@ -18,6 +18,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+<<<<<<< HEAD
     "noFallthroughCasesInSwitch": true,
 
     /* Path mapping */
@@ -25,6 +26,9 @@
     "paths": {
       "@/*": ["./src/*"]
     }
+=======
+    "noFallthroughCasesInSwitch": true
+>>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
   },
   "include": ["src"]
 }
