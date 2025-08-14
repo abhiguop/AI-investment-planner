@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Shield, ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Shield, ArrowRight, ArrowLeft, CheckCircle, Brain, Target, TrendingUp } from 'lucide-react';
 import { useInvestmentContext } from '../context/InvestmentContext';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 
 const RiskAssessment = () => {
   const navigate = useNavigate();
@@ -197,108 +201,131 @@ const RiskAssessment = () => {
     setAnswers(new Array(questions.length).fill(null));
   }, []);
   
-  return (
-    <div className="pt-24 pb-12 max-w-4xl mx-auto">
-      <div className="mb-8 text-center">
-        <Shield className="w-16 h-16 text-indigo-600 mx-auto mb-4" />
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">Risk Tolerance Assessment</h1>
-        <p className="text-lg text-gray-600">
-          Answer these questions to help us understand your investment style and risk tolerance
-        </p>
+  const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
+  
+  if (isCompleted) {
+    return (
+      <div className="pt-24 pb-12">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Card className="text-center p-8">
+              <CardHeader>
+                <div className="mx-auto mb-4 w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-8 h-8 text-green-600" />
+                </div>
+                <CardTitle className="text-2xl mb-2">Assessment Complete!</CardTitle>
+                <CardDescription>
+                  Your risk profile has been calculated. Let's create your personalized investment plan.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button onClick={navigateToInvestmentPlan} size="lg" className="w-full">
+                  View Your Investment Plan
+                  <ArrowRight className="ml-2" size={18} />
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </div>
-      
-      {!isCompleted ? (
-        <motion.div 
-          className="glass-card p-8"
+    );
+  }
+  
+  return (
+    <div className="pt-24 pb-12">
+      <div className="container mx-auto px-4 max-w-4xl">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center mb-4">
+            <Shield className="w-8 h-8 text-primary mr-3" />
+            <h1 className="text-3xl md:text-4xl font-bold">Risk Assessment</h1>
+          </div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Answer these questions to help us understand your investment preferences and create a personalized portfolio strategy.
+          </p>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="mb-8">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm text-muted-foreground">Question {currentQuestion + 1} of {questions.length}</span>
+            <span className="text-sm font-medium">{Math.round(progressPercentage)}% Complete</span>
+          </div>
+          <Progress value={progressPercentage} className="h-2" />
+        </div>
+
+        {/* Question Card */}
+        <motion.div
           key={currentQuestion}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="flex justify-between items-center mb-6">
-            <span className="text-sm font-medium text-gray-500">
-              Question {currentQuestion + 1} of {questions.length}
-            </span>
-            <div className="bg-indigo-100 rounded-full h-2 w-full max-w-xs ml-4">
-              <div 
-                className="bg-indigo-600 h-2 rounded-full transition-all duration-300 ease-out"
-                style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-          
-          <h2 className="text-xl md:text-2xl font-semibold mb-6">
-            {questions[currentQuestion].question}
-          </h2>
-          
-          <div className="space-y-3">
-            {questions[currentQuestion].options.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => handleAnswer(option.value)}
-                className="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-indigo-500 hover:bg-indigo-50 transition-all group"
-              >
-                <div className="flex items-center">
-                  <div className="w-6 h-6 flex-shrink-0 rounded-full border-2 border-gray-300 group-hover:border-indigo-500 mr-3"></div>
-                  <span className="text-gray-800 group-hover:text-indigo-700 font-medium">
-                    {option.text}
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-          
-          <div className="mt-8 flex justify-between">
-            {currentQuestion > 0 ? (
-              <button
-                onClick={goToPreviousQuestion}
-                className="flex items-center text-gray-600 hover:text-indigo-600 transition-colors"
-              >
-                <ArrowLeft size={16} className="mr-1" />
-                Previous Question
-              </button>
-            ) : (
-              <div></div>
-            )}
-            
-            <div className="text-sm text-gray-500">
-              {answers[currentQuestion] !== null ? (
-                <span className="text-green-600 flex items-center">
-                  <CheckCircle size={16} className="mr-1" />
-                  Answer selected
-                </span>
-              ) : (
-                "Select an option to continue"
-              )}
-            </div>
-          </div>
+          <Card className="mb-8">
+            <CardHeader>
+              <div className="flex items-center space-x-2 mb-2">
+                <Badge variant="outline">Question {currentQuestion + 1}</Badge>
+                <Badge variant="secondary" className="bg-primary/10 text-primary">
+                  <Brain className="w-3 h-3 mr-1" />
+                  AI Analysis
+                </Badge>
+              </div>
+              <CardTitle className="text-xl md:text-2xl">
+                {questions[currentQuestion].question}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {questions[currentQuestion].options.map((option, index) => (
+                  <Button
+                    key={index}
+                    variant={answers[currentQuestion] === option.value ? "default" : "outline"}
+                    className="w-full justify-start h-auto p-4 text-left"
+                    onClick={() => handleAnswer(option.value)}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                        answers[currentQuestion] === option.value 
+                          ? 'border-primary bg-primary' 
+                          : 'border-muted-foreground'
+                      }`}>
+                        {answers[currentQuestion] === option.value && (
+                          <div className="w-2 h-2 bg-primary-foreground rounded-full" />
+                        )}
+                      </div>
+                      <span className="text-sm md:text-base">{option.text}</span>
+                    </div>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
-      ) : (
-        <motion.div 
-          className="glass-card p-8 text-center"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-8 h-8 text-green-600" />
-          </div>
-          
-          <h2 className="text-2xl font-bold mb-2">Assessment Complete!</h2>
-          <p className="text-gray-600 mb-6">
-            Thank you for completing the risk assessment. We've analyzed your responses and prepared your personalized investment plan.
-          </p>
-          
-          <button
-            onClick={navigateToInvestmentPlan}
-            className="btn btn-primary"
+
+        {/* Navigation */}
+        <div className="flex justify-between items-center">
+          <Button
+            variant="outline"
+            onClick={goToPreviousQuestion}
+            disabled={currentQuestion === 0}
+            className="flex items-center"
           >
-            View Your Investment Plan
-            <ArrowRight className="ml-2" size={18} />
-          </button>
-        </motion.div>
-      )}
+            <ArrowLeft className="mr-2" size={16} />
+            Previous
+          </Button>
+          
+          <div className="flex items-center space-x-2">
+            <Target className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">
+              {answers.filter(answer => answer !== null).length} of {questions.length} answered
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
