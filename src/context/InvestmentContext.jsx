@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { saveToStorage, loadFromStorage, STORAGE_KEYS } from '../utils/storage';
 
 const InvestmentContext = createContext();
 
@@ -6,37 +7,43 @@ export const useInvestmentContext = () => useContext(InvestmentContext);
 
 export const InvestmentProvider = ({ children }) => {
   // Initial state for financial data
-  const [financialData, setFinancialData] = useState({
-    income: {
-      salary: 80000,
-      business: 0,
-      other: 5000
-    },
-    expenses: {
-      housing: 25000,
-      utilities: 5000,
-      groceries: 10000,
-      transportation: 5000,
-      other: 10000
-    }
-  });
+  const [financialData, setFinancialData] = useState(() => 
+    loadFromStorage(STORAGE_KEYS.FINANCIAL_DATA, {
+      income: {
+        salary: 80000,
+        business: 0,
+        other: 5000
+      },
+      expenses: {
+        housing: 25000,
+        utilities: 5000,
+        groceries: 10000,
+        transportation: 5000,
+        other: 10000
+      }
+    })
+  );
   
   // Investment plan state
-  const [investmentPlan, setInvestmentPlan] = useState({
-    riskScore: null,
-    riskProfile: null,
-    riskDescription: null,
-    equityAllocation: 40,
-    bondsAllocation: 30,
-    goldAllocation: 15,
-    cryptoAllocation: 5,
-    cashAllocation: 10,
-    monthlyInvestmentAmount: 0,
-    suggestedInvestments: null
-  });
+  const [investmentPlan, setInvestmentPlan] = useState(() => 
+    loadFromStorage(STORAGE_KEYS.INVESTMENT_PLAN, {
+      riskScore: null,
+      riskProfile: null,
+      riskDescription: null,
+      equityAllocation: 40,
+      bondsAllocation: 30,
+      goldAllocation: 15,
+      cryptoAllocation: 5,
+      cashAllocation: 10,
+      monthlyInvestmentAmount: 0,
+      suggestedInvestments: null
+    })
+  );
   
   // Track if the user has completed the risk assessment
-  const [hasCompletedRiskAssessment, setHasCompletedRiskAssessment] = useState(false);
+  const [hasCompletedRiskAssessment, setHasCompletedRiskAssessment] = useState(() => 
+    loadFromStorage(STORAGE_KEYS.RISK_ASSESSMENT, false)
+  );
   
   // Market data for simulations
   const [historicalData, setHistoricalData] = useState({
@@ -76,26 +83,31 @@ export const InvestmentProvider = ({ children }) => {
   
   // Update income details
   const updateIncome = (newIncome) => {
-    setFinancialData({
+    const updatedData = {
       ...financialData,
       income: newIncome
-    });
+    };
+    setFinancialData(updatedData);
+    saveToStorage(STORAGE_KEYS.FINANCIAL_DATA, updatedData);
   };
   
   // Update expense details
   const updateExpenses = (newExpenses) => {
-    setFinancialData({
+    const updatedData = {
       ...financialData,
       expenses: newExpenses
-    });
+    };
+    setFinancialData(updatedData);
+    saveToStorage(STORAGE_KEYS.FINANCIAL_DATA, updatedData);
   };
   
   // Update risk profile and investment allocations
   const updateRiskProfile = (riskData) => {
-    setInvestmentPlan({
+    const updatedPlan = {
       ...investmentPlan,
       ...riskData
-    });
+    };
+    setInvestmentPlan(updatedPlan);
     setHasCompletedRiskAssessment(true);
     
     // Calculate monthly investment amount
@@ -107,18 +119,24 @@ export const InvestmentProvider = ({ children }) => {
     const disposableIncome = totalIncome - totalExpenses;
     const recommendedInvestmentAmount = Math.max(0, Math.round(disposableIncome * 0.8));
     
-    setInvestmentPlan(prev => ({
-      ...prev,
+    const finalPlan = {
+      ...updatedPlan,
       monthlyInvestmentAmount: recommendedInvestmentAmount
-    }));
+    };
+    
+    setInvestmentPlan(finalPlan);
+    saveToStorage(STORAGE_KEYS.INVESTMENT_PLAN, finalPlan);
+    saveToStorage(STORAGE_KEYS.RISK_ASSESSMENT, true);
   };
   
   // Update investment suggestions from Gemini API
   const updateInvestmentSuggestions = (suggestions) => {
-    setInvestmentPlan(prev => ({
-      ...prev,
+    const updatedPlan = {
+      ...investmentPlan,
       suggestedInvestments: suggestions
-    }));
+    };
+    setInvestmentPlan(updatedPlan);
+    saveToStorage(STORAGE_KEYS.INVESTMENT_PLAN, updatedPlan);
   };
   
   const value = {
