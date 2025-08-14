@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import { motion } from 'framer-motion';
 import { PlusCircle, TrendingUp, DollarSign, PieChart, ArrowRight, Calendar, Wallet, CreditCard, Building, Receipt, Target, BarChart3 } from 'lucide-react';
-=======
-import { PlusCircle, TrendingUp, DollarSign, PieChart, ArrowRight, Calendar, Wallet, CreditCard, Building, Receipt } from 'lucide-react';
-import { motion } from 'framer-motion';
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
 import { useInvestmentContext } from '../context/InvestmentContext';
 import IncomeForm from '../components/dashboard/IncomeForm';
 import ExpenseForm from '../components/dashboard/ExpenseForm';
 import InvestmentSummary from '../components/dashboard/InvestmentSummary';
-<<<<<<< HEAD
+import ActionCard from '../components/dashboard/ActionCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-=======
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
 
 const Dashboard = () => {
   const { financialData, updateIncome, updateExpenses } = useInvestmentContext();
@@ -27,7 +20,6 @@ const Dashboard = () => {
   useEffect(() => {
     document.title = 'Dashboard | InvestWise';
   }, []);
-<<<<<<< HEAD
 
   const totalIncome = financialData.income.salary + financialData.income.business + financialData.income.other;
   const totalExpenses = financialData.expenses.housing + financialData.expenses.utilities + 
@@ -133,85 +125,14 @@ const Dashboard = () => {
               )}
             </CardContent>
           </Card>
-=======
-  
-  return (
-    <div className="pt-24 pb-12">
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">Financial Dashboard</h1>
-        <p className="text-lg text-gray-600">Manage your income, expenses, and view investment opportunities</p>
-      </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        {/* Income Card */}
-        <motion.div 
-          className="glass-card p-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h3 className="text-xl font-semibold flex items-center">
-                <Wallet className="mr-2 text-green-500" size={20} />
-                Monthly Income
-              </h3>
-              <p className="text-gray-500 text-sm">Your recurring earnings</p>
-            </div>
-            <button 
-              onClick={() => setShowIncomeForm(!showIncomeForm)}
-              className="text-indigo-600 hover:text-indigo-800"
-              aria-label={showIncomeForm ? "Close income form" : "Add income"}
-            >
-              <PlusCircle size={20} />
-            </button>
-          </div>
-          
-          {showIncomeForm ? (
-            <IncomeForm 
-              onSubmit={(data) => {
-                updateIncome(data);
-                setShowIncomeForm(false);
-              }}
-              onCancel={() => setShowIncomeForm(false)}
-              currentData={financialData.income}
-            />
-          ) : (
-            <>
-              <h2 className="text-3xl font-bold mb-4">
-                ₹{(financialData.income.salary + financialData.income.business + financialData.income.other).toLocaleString()}
-              </h2>
-              
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Salary</span>
-                  <span className="font-medium">₹{financialData.income.salary.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Business</span>
-                  <span className="font-medium">₹{financialData.income.business.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Other Income</span>
-                  <span className="font-medium">₹{financialData.income.other.toLocaleString()}</span>
-                </div>
-              </div>
-            </>
-          )}
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
         </motion.div>
         
         {/* Expenses Card */}
         <motion.div 
-<<<<<<< HEAD
-=======
-          className="glass-card p-6"
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-<<<<<<< HEAD
           <Card className="h-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <div>
@@ -273,79 +194,14 @@ const Dashboard = () => {
               )}
             </CardContent>
           </Card>
-=======
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h3 className="text-xl font-semibold flex items-center">
-                <CreditCard className="mr-2 text-red-500" size={20} />
-                Monthly Expenses
-              </h3>
-              <p className="text-gray-500 text-sm">Your regular spending</p>
-            </div>
-            <button 
-              onClick={() => setShowExpenseForm(!showExpenseForm)}
-              className="text-indigo-600 hover:text-indigo-800"
-              aria-label={showExpenseForm ? "Close expense form" : "Add expense"}
-            >
-              <PlusCircle size={20} />
-            </button>
-          </div>
-          
-          {showExpenseForm ? (
-            <ExpenseForm 
-              onSubmit={(data) => {
-                updateExpenses(data);
-                setShowExpenseForm(false);
-              }}
-              onCancel={() => setShowExpenseForm(false)}
-              currentData={financialData.expenses}
-            />
-          ) : (
-            <>
-              <h2 className="text-3xl font-bold mb-4">
-                ₹{(financialData.expenses.housing + financialData.expenses.utilities + 
-                    financialData.expenses.groceries + financialData.expenses.transportation + 
-                    financialData.expenses.other).toLocaleString()}
-              </h2>
-              
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Housing</span>
-                  <span className="font-medium">₹{financialData.expenses.housing.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Utilities</span>
-                  <span className="font-medium">₹{financialData.expenses.utilities.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Groceries</span>
-                  <span className="font-medium">₹{financialData.expenses.groceries.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Transportation</span>
-                  <span className="font-medium">₹{financialData.expenses.transportation.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-600">Other</span>
-                  <span className="font-medium">₹{financialData.expenses.other.toLocaleString()}</span>
-                </div>
-              </div>
-            </>
-          )}
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
         </motion.div>
         
         {/* Savings Card */}
         <motion.div 
-<<<<<<< HEAD
-=======
-          className="glass-card p-6"
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
         >
-<<<<<<< HEAD
           <Card className="h-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-xl flex items-center">
@@ -390,44 +246,6 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
-=======
-          <h3 className="text-xl font-semibold flex items-center mb-4">
-            <Building className="mr-2 text-indigo-500" size={20} />
-            Available for Investment
-          </h3>
-          
-          <h2 className="text-3xl font-bold mb-4">
-            ₹{(
-              (financialData.income.salary + financialData.income.business + financialData.income.other) - 
-              (financialData.expenses.housing + financialData.expenses.utilities + 
-               financialData.expenses.groceries + financialData.expenses.transportation + 
-               financialData.expenses.other)
-            ).toLocaleString()}
-          </h2>
-          
-          <div className="bg-indigo-50 rounded-lg p-4 mb-4">
-            <div className="flex items-center mb-2">
-              <Calendar size={18} className="text-indigo-600 mr-2" />
-              <p className="text-sm font-medium">Investment Potential</p>
-            </div>
-            <p className="text-gray-600 text-sm">
-              {(financialData.income.salary + financialData.income.business + financialData.income.other) === 0 
-                ? "Please add your income details to calculate investment potential."
-                : `You can invest approximately ₹${(
-                    ((financialData.income.salary + financialData.income.business + financialData.income.other) - 
-                     (financialData.expenses.housing + financialData.expenses.utilities + 
-                      financialData.expenses.groceries + financialData.expenses.transportation + 
-                      financialData.expenses.other)) * 0.8
-                  ).toLocaleString()} monthly for long-term growth.`
-              }
-            </p>
-          </div>
-          
-          <Link to="/risk-assessment" className="btn btn-primary w-full">
-            Plan Your Investments
-            <ArrowRight size={16} className="ml-2" />
-          </Link>
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
         </motion.div>
       </div>
       
@@ -435,7 +253,6 @@ const Dashboard = () => {
       <InvestmentSummary />
       
       {/* Quick Links */}
-<<<<<<< HEAD
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -458,113 +275,34 @@ const Dashboard = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Risk Assessment Card */}
-            <motion.div 
-              whileHover={{ y: -5, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-              className="relative group"
-            >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-300 group-hover:duration-200"></div>
-              <Card className="relative bg-card/50 backdrop-blur-sm border border-border/50 overflow-hidden group-hover:border-primary/30 transition-colors h-full">
-                <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors"></div>
-                <CardContent className="p-6 relative z-10">
-                  <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-colors">
-                    <TrendingUp className="text-blue-400" size={24} />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-400 transition-colors">Risk Assessment</h3>
-                  <p className="text-muted-foreground text-sm mb-4">Discover your ideal investment risk profile and preferences</p>
-                  <Button asChild variant="ghost" className="px-0 text-blue-400 hover:text-blue-400/80 hover:bg-transparent -ml-2 group-hover:translate-x-1 transition-transform">
-                    <Link to="/risk-assessment" className="flex items-center">
-                      Get Started
-                      <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            {/* Investment Plan Card */}
-            <motion.div 
-              whileHover={{ y: -5, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300, delay: 0.05 }}
-              className="relative group"
-            >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-300 group-hover:duration-200"></div>
-              <Card className="relative bg-card/50 backdrop-blur-sm border border-border/50 overflow-hidden group-hover:border-emerald-500/30 transition-colors h-full">
-                <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-emerald-500/10 group-hover:bg-emerald-500/20 transition-colors"></div>
-                <CardContent className="p-6 relative z-10">
-                  <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:bg-emerald-500/20 transition-colors">
-                    <PieChart className="text-emerald-400" size={24} />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-emerald-400 transition-colors">Investment Plan</h3>
-                  <p className="text-muted-foreground text-sm mb-4">View your personalized investment strategy and allocations</p>
-                  <Button asChild variant="ghost" className="px-0 text-emerald-400 hover:text-emerald-400/80 hover:bg-transparent -ml-2 group-hover:translate-x-1 transition-transform">
-                    <Link to="/investment-plan" className="flex items-center">
-                      View Plan
-                      <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-            
-            {/* Historical Performance Card */}
-            <motion.div 
-              whileHover={{ y: -5, scale: 1.02 }}
-              transition={{ type: 'spring', stiffness: 300, delay: 0.1 }}
-              className="relative group md:col-span-1"
-            >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-indigo-400 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-300 group-hover:duration-200"></div>
-              <Card className="relative bg-card/50 backdrop-blur-sm border border-border/50 overflow-hidden group-hover:border-purple-500/30 transition-colors h-full">
-                <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-purple-500/10 group-hover:bg-purple-500/20 transition-colors"></div>
-                <CardContent className="p-6 relative z-10">
-                  <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-colors">
-                    <BarChart3 className="text-purple-400" size={24} />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-purple-400 transition-colors">Historical Performance</h3>
-                  <p className="text-muted-foreground text-sm mb-4">Analyze how your strategy would have performed over time</p>
-                  <Button asChild variant="ghost" className="px-0 text-purple-400 hover:text-purple-400/80 hover:bg-transparent -ml-2 group-hover:translate-x-1 transition-transform">
-                    <Link to="/historical-simulation" className="flex items-center">
-                      View Analysis
-                      <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <ActionCard
+              icon={TrendingUp}
+              title="Risk Assessment"
+              description="Discover your ideal investment risk profile and preferences"
+              link="/risk-assessment"
+              buttonText="Get Started"
+              color="blue"
+            />
+            <ActionCard
+              icon={PieChart}
+              title="Investment Plan"
+              description="View your personalized investment strategy and allocations"
+              link="/investment-plan"
+              buttonText="View Plan"
+              color="emerald"
+            />
+            <ActionCard
+              icon={BarChart3}
+              title="Historical Performance"
+              description="Analyze how your strategy would have performed over time"
+              link="/historical-simulation"
+              buttonText="View Analysis"
+              color="purple"
+            />
           </div>
         </div>
       </motion.div>
-=======
-      <div className="mt-12">
-        <h2 className="text-2xl font-semibold mb-6">Continue Your Investment Journey</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link to="/risk-assessment" className="card flex items-center p-5 hover:scale-[1.02] transition-transform">
-            <TrendingUp className="text-indigo-600 mr-4" size={24} />
-            <div>
-              <h3 className="font-medium mb-1">Risk Assessment</h3>
-              <p className="text-sm text-gray-600">Determine your investment risk profile</p>
-            </div>
-          </Link>
-          
-          <Link to="/investment-plan" className="card flex items-center p-5 hover:scale-[1.02] transition-transform">
-            <PieChart className="text-teal-500 mr-4" size={24} />
-            <div>
-              <h3 className="font-medium mb-1">Investment Plan</h3>
-              <p className="text-sm text-gray-600">View your personalized investment strategy</p>
-            </div>
-          </Link>
-          
-          <Link to="/historical-simulation" className="card flex items-center p-5 hover:scale-[1.02] transition-transform">
-            <Receipt className="text-amber-500 mr-4" size={24} />
-            <div>
-              <h3 className="font-medium mb-1">Historical Performance</h3>
-              <p className="text-sm text-gray-600">See how your plan would have performed</p>
-            </div>
-          </Link>
-        </div>
-      </div>
->>>>>>> e80474b994ee653dd3d63b06b54f21776c430b53
+
     </div>
   );
 };
